@@ -20,12 +20,28 @@ extension ContentView {
         private let availableBackground: [String] = ["cloth", "plain", "wood-cartoon", "wood-grain"]
        
         func deal() {
-            let randomPlayerCard = "card\(availableCards.randomElement()!)"
-            let randomCpuCard = "card\(availableCards.randomElement()!)"
+            
+            let playerNewCard = availableCards.randomElement()!
+            let cpuNewCard = availableCards.randomElement()!
+            
+            var playerNewScore: Int = playerScore
+            var cpuNewScore: Int = cpuScore
+            
+            if playerNewCard > cpuNewCard {
+                playerNewScore += 1
+            } else if cpuNewCard > playerNewCard {
+                cpuNewScore += 1
+            }
+            
+            
 
             withAnimation {
-                playerCard = randomPlayerCard
-                cpuCard = randomCpuCard
+                playerCard = "card\(playerNewCard)"
+                cpuCard = "card\(cpuNewCard)"
+                
+                playerScore = playerNewScore
+                cpuScore = cpuNewScore
+                
             }
             
         }
