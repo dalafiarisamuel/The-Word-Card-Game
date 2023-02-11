@@ -15,35 +15,50 @@ extension ContentView {
         @Published var backgroundImage: String = "background-cloth"
         @Published var playerScore: Int = 0
         @Published var cpuScore: Int = 0
+        @Published var winner: String? = nil
+        private let winningScore = 20
 
         private let availableCards: [Int] = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
         private let availableBackground: [String] = ["cloth", "plain", "wood-cartoon", "wood-grain"]
-       
+
         func deal() {
-            
             let playerNewCard = availableCards.randomElement()!
             let cpuNewCard = availableCards.randomElement()!
-            
+
             var playerNewScore: Int = playerScore
             var cpuNewScore: Int = cpuScore
-            
+
             if playerNewCard > cpuNewCard {
                 playerNewScore += 1
             } else if cpuNewCard > playerNewCard {
                 cpuNewScore += 1
             }
-            
-            
 
             withAnimation {
                 playerCard = "card\(playerNewCard)"
                 cpuCard = "card\(cpuNewCard)"
-                
                 playerScore = playerNewScore
                 cpuScore = cpuNewScore
-                
+                watchWinner()
             }
-            
+        }
+
+        func resetGame() {
+            playerCard = "back"
+            cpuCard = "back"
+            playerScore = 0
+            cpuScore = 0
+            winner = nil
+        }
+
+        private func watchWinner() {
+            withAnimation(.spring()) {
+                if playerScore == winningScore {
+                    winner = "Player"
+                } else if cpuScore == winningScore {
+                    winner = "CPU"
+                }
+            }
         }
     }
 }

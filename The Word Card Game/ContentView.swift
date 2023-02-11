@@ -38,6 +38,7 @@ struct ContentView: View {
                 } label: {
                     Image("button")
                 }
+                .disabled(vm.winner != nil)
 
                 HStack {
                     Spacer()
@@ -61,9 +62,29 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 Spacer()
             }
-        }
-    }
 
+            if let winner = vm.winner {
+                VStack {
+                    Text("\(winner) wins!")
+                        .font(.largeTitle)
+                        
+                    Button { vm.resetGame() } label: {
+                        Text("Reset Game!")
+                            .padding()
+                            .foregroundColor(.black)
+                            .background(.white)
+                            .clipShape(Capsule())
+                    }
+                }
+                .foregroundColor(.white)
+                .padding(70)
+                .background(.green.opacity(0.85))
+                .cornerRadius(25)
+                .transition(.scale)
+            }
+        }
+        
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
